@@ -1,34 +1,28 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">Dating App</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarCollapse"
-      aria-controls="navbarCollapse"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Matches</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Lists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Messages</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()">Logout</a>
-        </li>
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating App</a>
+
+      <ul class="navbar-nav mr-auto" >
+        <ng-container *ngIf="accountService.currentUser$ | async"> 
+          <!-- ng-container does not generate any HTML tag, 
+            It's useful when you want to apply a conditional to something, 
+            because it's not going to interfere with any of your styling 
+            because it doesn't generate any HTML and it won't affect any of your styling. 
+            ng-container is used to avoid the error: Expression has changed after it was checked. -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+          </li>
+        </ng-container>
       </ul>
-      <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-        <a class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+
+      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
           <a class="dropdown-item">Edit Profile</a>
           <div class="dropdown-divider"></div>
@@ -56,10 +50,9 @@
           type="password"
           placeholder="Password"
         />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">
           Login
         </button>
       </form>
     </div>
-  </div>
 </nav>

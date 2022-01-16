@@ -10,7 +10,10 @@ import { map } from 'rxjs/operators';
 })
 export class AccountService {
   baseUrl = 'https://localhost:5001/api/';  
-  private currentUserSource = new ReplaySubject<User>(1);
+  private currentUserSource = new ReplaySubject<User>(1); //The reason we set this up as an observable is so that 
+                                                          //this can be observed by other components or other classes 
+                                                          //in our application. And whenever something subscribes to this, 
+                                                          //then it's going to be notified if anything changes. 
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
